@@ -48,8 +48,6 @@ const route = useRoute()
 const router = useRouter()
 const errMessage = ref('')
 
-//URLのIDを取得
-//const shainNo = route.params.id as string
 
 const form = ref({
   id: 0,
@@ -63,7 +61,7 @@ const form = ref({
 //保存
 const save = async () => {
   try {
-    const res = await fetch(`http://localhost:5075/api/Employee/PostEmp`, {
+    const res = await fetch(`http://localhost:5075/api/Employee/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/Json' },
       body: JSON.stringify(form.value)
@@ -75,9 +73,9 @@ const save = async () => {
     alert('保存しました')
     router.push('/employeeList')
 
-  } catch (e: unknown) {
+  } catch (e) {
     errMessage.value =
-      e instanceof Error ? e.message : '予期せぬエラーが発生しました'
+    e instanceof Error ? e.message : '予期しないエラーが発生しました'
   }
 }
 

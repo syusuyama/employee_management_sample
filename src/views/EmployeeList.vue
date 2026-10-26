@@ -53,14 +53,15 @@ const goBack = () => { router.push('/login') } //戻る
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:5075/api/Employee/GetAllEmp')
+    const res = await fetch('http://localhost:5075/api/Employee/getAll')
 
     if (!res.ok) {
       throw new Error('社員情報が取得できませんでした')
     }
     employeesList.value = await res.json()
-  } catch (e: any) {
-    errMessage.value = e.errMessage
+  } catch (e) {
+    errMessage.value =
+    e instanceof Error ? e.message : '予期しないエラーが発生しました'
   }
 })
 

@@ -8,12 +8,12 @@ import EmployeeDisp from '../views/EmployeeDisp.vue'
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/employeeList', component: EmployeeList },
-  { path: '/employeeRegister', component: EmployeeRegister },
-  { path: '/employeeEdit/:id', component: EmployeeEdit },
-  { path: '/employeeDisp/:id', component: EmployeeDisp },
-  { path: '/employee/new', name: 'EmployeeNew', component: EmployeeEdit },
-  { path: '/employee/edit/:id', name: 'EmployeeNew', component: EmployeeEdit }
+  { path: '/employeeList', name:'EmployeeList', component: EmployeeList },
+  { path: '/employeeRegister', name:'EmployeeRegister', component: EmployeeRegister },
+  { path: '/employeeEdit/:shainNo', name:'EmployeeEdit', component: EmployeeEdit },
+  { path: '/employeeDisp/:shainNo', name:'EmployeeDisp', component: EmployeeDisp },
+  //{ path: '/employee/new', name: 'EmployeeNew', component: EmployeeEdit },
+  //{ path: '/employee/edit/:shainNo', name: 'EmployeeEdit', component: EmployeeEdit }
 ]
 
 export default createRouter({

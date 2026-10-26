@@ -30,6 +30,7 @@
       </tbody>
     </table>
     <br />
+    <button @click="goEdit">編集</button>
     <br />
     <br />
     <br />
@@ -54,10 +55,11 @@ const router = useRouter()
 const errMessage = ref('')
 
 //URLのIDを取得
-const shainNo = route.params.id as string
+const shainNo = route.params.shainNo as string
 
 const employee = ref({
-  id: shainNo,
+  id: 0,
+  shainNo: shainNo,
   name: '',
   busho: '',
   age: 0,
@@ -67,7 +69,7 @@ const employee = ref({
 
 //IDに紐づく社員情報を取得
 onMounted(async () => {
-  const res = await fetch(`http://localhost:5075/api/Employee/GetEmp/${employee.value.id}`)
+  const res = await fetch(`http://localhost:5075/api/Employee/getByShainNo/${shainNo}`)
   if (!res.ok) {
     errMessage.value = '社員情報の取得に失敗しました'
     return
@@ -78,7 +80,8 @@ onMounted(async () => {
 
   //フォームにコピー
   employee.value = {
-    id: emp.shainNo,
+    id: 0,
+    shainNo: emp.shainNo,
     name: emp.name,
     busho: emp.busho,
     age: emp.age,
@@ -87,8 +90,31 @@ onMounted(async () => {
   }
 })
 
+//保存
+const save = async () => {
+  try {
+    const res = await fetch(`http://localhost:5075/api/Employee/update/${shainNo}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/Json' },
+      body: JSON.stringify(form.value)
+    })
+
+    if (!res.ok) {
+      throw new Error('保存できませんでした')
+    }
+    alert('保存しました')
+    router.push('/employeeList')
+
+  } catch (e) {
+    errMessage.value =
+    e instanceof Error ? e.message : '予期しないエラーが発生しました'
+  }
+}
+
+//編集
+const goEdit = (shainNo: string) => { router.push({ name: 'EmployeeEdit', params: { shainNo } }) } //編集
 
 //戻る
-const goBack = () => { router.push('/employeeList') }
+const goBack = () => { router.push('/employeeList') } //戻る
 </script>
 
